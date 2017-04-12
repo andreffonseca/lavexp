@@ -42,3 +42,26 @@ class CreateTableMessagesTmp extends Migration
         Schema::drop('itsqd_mon_messages');
     }
 }
+
+/****
+create table itsqd_mondb.itsqd_mon_messages ( 
+id int not null auto_increment primary key,
+source_id int not null,
+alert_id varchar(100),
+host varchar(100),
+service varchar(100),
+time varchar(100),
+status varchar(100),
+poller varchar(100),
+output varchar(100),
+thruk_url varchar(100),
+sca_url varchar(100),
+out_1 varchar(100),
+out_2 varchar(100),
+out_3 varchar(100),
+uid varchar(100),
+gid varchar(100),
+flg_stat varchar(100),
+created_at timestamp,
+updated_at timestamp);
+*/
