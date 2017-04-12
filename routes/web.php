@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 // create our route, return a view file (app/views/viewdata.blade.php)
 // we will also send the records we want to the view
-Route::get('viewdata', function() {
+Route::get('/viewdata', function() {
     return View::make('viewdata')
         // all the bears (will also return the fish, trees, and picnics that belong to them)
         ->with('itsqd_mon_messages', itsqd_mon_messages::all());//->with('trees', 'picnics'));
