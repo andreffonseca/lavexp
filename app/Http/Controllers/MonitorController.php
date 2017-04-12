@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class MonitorController extends Controller
 {
@@ -60,4 +61,12 @@ class MonitorController extends Controller
         $message->save();
         
     }
+
+   public function message2(Request $request) {
+        $message2 = new \App\Models\MonitorMessages();
+
+        //dd($message2->all());
+	return View::make('viewdata')->with('itsqd_mon_messages', $message2->all());
+   }
+
 }
