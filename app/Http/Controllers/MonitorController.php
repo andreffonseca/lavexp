@@ -26,29 +26,51 @@ class MonitorController extends Controller
         
         $message->source_id = $request->input('id') ;
         // poller
-        $message->msg_field_1 = $request->input('plr');
+        $message->poller = $request->input('plr');
         // time
-        $message->msg_field_2 = $request->input('t');
+        $message->time = $request->input('t');
         //type
-        $message->msg_field_3 = $request->input('tp');
+        $message->type = $request->input('tp');
         //status
-        $message->msg_field_4 = $request->input('s');
+        $message->status = $request->input('s');
         //service
-        $message->msg_field_5 = $request->input('srv');
+        $message->service = $request->input('srv');
         //host
-        $message->msg_field_6 = $request->input('h');
+        $message->host = $request->input('h');
         //IP
-        $message->msg_field_7 = $request->input('ip');
+        $message->ip = $request->input('ip');
         //group
-        $message->msg_field_8 = $request->input('g');
-        //ot
-        $message->msg_field_9 = $request->input('ot');
+        //output
+        $message->out_1 = $request->input('ot1');
+        $message->out_2 = $request->input('ot2');
+        $message->out_3 = $request->input('ot3');
         //thruk link
-        $message->msg_field_10 = $request->input('th');
+        $message->thruk_url = $request->input('th');
         //sca
-        $message->msg_field_11 = $request->input('sc');
+        $message->sca_url = $request->input('sc');
         
         $message->save();
         
     }
 }
+
+/**
+$table->increments('message_id');
+            $table->string('source_id',30);
+            $table->string('alert_id',255)->nullable();
+            $table->string('host',100)->nullable();
+            $table->string('service',255)->nullable();
+            $table->string('time',255)->nullable();
+            $table->string('status',255)->nullable();
+            $table->string('poller',255)->nullable();
+            $table->string('output',255)->nullable();
+            $table->string('thruk_url',255)->nullable();
+            $table->string('sca_url',255)->nullable();
+            $table->string('out_1',255)->nullable();
+            $table->string('out_2',255)->nullable();
+            $table->string('out_3',255)->nullable();
+            $table->string('uid',20)->nullable();
+            $table->string('gid',20)->nullable();
+            $table->string('flg_stat',10)->nullable();
+            $table->timestamps();
+            */
