@@ -30,7 +30,7 @@ class MonitorController extends Controller
         // time
         $message->time = $request->input('t');
         //type
-        $message->type = $request->input('tp');
+        //$message->type = $request->input('tp');
         //status
         $message->status = $request->input('s');
         //service
