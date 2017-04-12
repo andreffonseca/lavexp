@@ -20,7 +20,10 @@ class MonitorController extends Controller
     public function message(Request $request) {
         
         
-        dd($request->input());
+        echo '<pre>';
+        print_r($request->input());
+        echo '</pre>';
+        exit();
         
         $message = new \App\Models\MonitorMessages();
         
