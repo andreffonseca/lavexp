@@ -20,7 +20,7 @@ class MonitorController extends Controller
     public function message(Request $request) {
         
         
-        //dd($request->input());
+        dd($request->input());
         
         $message = new \App\Models\MonitorMessages();
         
@@ -53,24 +53,3 @@ class MonitorController extends Controller
         
     }
 }
-
-/**
-$table->increments('message_id');
-            $table->string('source_id',30);
-            $table->string('alert_id',255)->nullable();
-            $table->string('host',100)->nullable();
-            $table->string('service',255)->nullable();
-            $table->string('time',255)->nullable();
-            $table->string('status',255)->nullable();
-            $table->string('poller',255)->nullable();
-            $table->string('output',255)->nullable();
-            $table->string('thruk_url',255)->nullable();
-            $table->string('sca_url',255)->nullable();
-            $table->string('out_1',255)->nullable();
-            $table->string('out_2',255)->nullable();
-            $table->string('out_3',255)->nullable();
-            $table->string('uid',20)->nullable();
-            $table->string('gid',20)->nullable();
-            $table->string('flg_stat',10)->nullable();
-            $table->timestamps();
-            */
