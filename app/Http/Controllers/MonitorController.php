@@ -38,7 +38,7 @@ class MonitorController extends Controller
         //host
         $message->host = $request->input('h');
         //IP
-        $message->ip = $request->input('ip');
+        //$message->ip = $request->input('ip');
         //group
         //output
         $message->out_1 = $request->input('ot1');
