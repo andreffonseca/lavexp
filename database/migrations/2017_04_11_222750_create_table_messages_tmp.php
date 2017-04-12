@@ -19,6 +19,7 @@ class CreateTableMessagesTmp extends Migration
             $table->string('source_id',30);
             $table->string('poller',255)->nullable();
             $table->string('time',255)->nullable();
+            $table->string('type',255)->nullable();
             $table->string('status',255)->nullable();
             $table->string('service',255)->nullable();
             $table->string('alert_id',255)->nullable();
