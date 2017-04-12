@@ -17,17 +17,21 @@ class CreateTableMessagesTmp extends Migration
             
             $table->increments('message_id');
             $table->string('source_id',30);
-            $table->string('msg_field_1',255)->nullable();
-            $table->string('msg_field_2',255)->nullable();
-            $table->string('msg_field_3',255)->nullable();
-            $table->string('msg_field_4',255)->nullable();
-            $table->string('msg_field_5',255)->nullable();
-            $table->string('msg_field_6',255)->nullable();
-            $table->string('msg_field_7',255)->nullable();
-            $table->string('msg_field_8',255)->nullable();
-            $table->string('msg_field_9',255)->nullable();
-            $table->string('msg_field_10',255)->nullable();
-            $table->string('msg_field_11',255)->nullable();
+            $table->string('alert_id',255)->nullable();
+            $table->string('host',100)->nullable();
+            $table->string('service',255)->nullable();
+            $table->string('time',255)->nullable();
+            $table->string('status',255)->nullable();
+            $table->string('poller',255)->nullable();
+            $table->string('output',255)->nullable();
+            $table->string('thruk_url',255)->nullable();
+            $table->string('sca_url',255)->nullable();
+            $table->string('out_1',255)->nullable();
+            $table->string('out_2',255)->nullable();
+            $table->string('out_3',255)->nullable();
+            $table->string('uid',20)->nullable();
+            $table->string('gid',20)->nullable();
+            $table->string('flg_stat',10)->nullable();
             $table->timestamps();
         });
     }
