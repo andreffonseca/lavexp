@@ -19,10 +19,13 @@ Route::get('/', function () {
 // UserController = controller that handles User Management
 // Route for obtaining info of current user (by current session)
 Route::get('/userinfo', 'UserController@getUserInfo');
+Route::post('/userinfo', 'UserController@getUserInfo');
 // Route for trying to authenticate existent user by LDAP
 Route::get('/login', 'UserController@loginUser');
+Route::post('/login', 'UserController@loginUser');
 // Route for trying to logout existent user (on portal, no need for LDAP)
 Route::get('/logout', 'UserController@logoutUser');
+Route::post('/logout', 'UserController@logoutUser');
 
 // MonitorController = controller that handles Alerts
 // Route to deal with call to page that show list of alerts
