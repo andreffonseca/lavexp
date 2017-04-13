@@ -18,12 +18,14 @@ class UserController extends Controller
     }
     
     public function loginUser(Request $request) {
+        
         // Connect to LDAP server, must be a valid LDAP server!
         $ds = ldap_connect("ldap.siege.red");
         var_dump("connect result is " . $ds . "<br />");
         //dd($ds);
         if ($ds) {
-            
+            $ub = ldap_bind($ds, "it160297@siege.red", 'testepass');
+            var_dump("bind result is " . $ub . "<br />");
         } else {
             var_dump("<h4>Unable to connect to LDAP server</h4>");
         }
