@@ -20,13 +20,13 @@ class UserController extends Controller {
     function __construct($params = array()) {
         parent::__construct();
         //loadLib("org.programming.tolls.debuglib");
-        if (isset($params["username"])) {
+        if ($params["username"] != null) {
                         $this->setUsername($params["username"]);
         }
-        if (isset($params["password"])) {
+        if ($params["password"] != null) {
                         $this->setPassword($params["password"]);
         }
-        if (isset($params["server"])) {
+        if ($params["server"] != null) {
                         $this->setServer($params["server"]);
         }
     }
