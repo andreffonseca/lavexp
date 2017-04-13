@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// AuthController = controller that handles User Management
+// UserController = controller that handles User Management
 // Route for obtaining info of current user (by current session)
 Route::get('/userinfo', 'UserController@getUserInfo');
 // Route for trying to authenticate existent user by LDAP

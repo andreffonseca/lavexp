@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
-class AuthController extends Controller
+class UserController extends Controller
 {
     function __construct() {}
     
