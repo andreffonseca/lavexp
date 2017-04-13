@@ -47,6 +47,7 @@ class UserController extends Controller {
      * @param user Username for domain of LDAP
      * @param pass Password for domain of LDAP
      */
+    
     public function loginUser(Request $request) {
         // LDAP server can also be 'DCPT02VPW.siege.red'
         $params = array("username" => 'redoute_france\itxxx', 'password' => 'xxx', 'server' => 'ldap.siege.red');
