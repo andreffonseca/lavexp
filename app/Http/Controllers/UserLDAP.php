@@ -50,7 +50,7 @@ class UserLDAP {
             throw new LDAPException("Error Connection do LDAP Server " . $this->server, LDAPException::LDAP_CONNECTION_ERROR);
         }
 
-        ldap_set_option($this->connection, LDAP_OPT_PROTOCOL_VERSION, LDAPLib::LDAP_VERSION_3);
+        ldap_set_option($this->connection, LDAP_OPT_PROTOCOL_VERSION, UserLDAP::LDAP_VERSION_3);
         ldap_set_option($this->connection, LDAP_OPT_REFERRALS, 0);
     }
     /**
