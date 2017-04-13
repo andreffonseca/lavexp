@@ -20,14 +20,14 @@ class UserController extends Controller {
     function __construct($params = array()) {
         parent::__construct();
         //loadLib("org.programming.tolls.debuglib");
-        if ($params["username"] != null) {
-                        $this->setUsername($params["username"]);
+        if (isset($params["username"])) {
+            $this->setUsername($params["username"]);
         }
-        if ($params["password"] != null) {
-                        $this->setPassword($params["password"]);
+        if (isset($params["password"])) {
+            $this->setPassword($params["password"]);
         }
-        if ($params["server"] != null) {
-                        $this->setServer($params["server"]);
+        if (isset($params["server"])) {
+            $this->setServer($params["server"]);
         }
     }
     
@@ -51,10 +51,10 @@ class UserController extends Controller {
     public function loginUser(Request $request) {
         // LDAP server can also be 'DCPT02VPW.siege.red'
         $params = array("username" => 'redoute_france\itxxx', 'password' => 'xxx', 'server' => 'ldap.siege.red');
-        if (isset($request->input('user'))) {
+        if ($request->input('user') != null) {
             $params["username"] = $request->input('user');
         }
-        if (isset($request->input('pass'))) {
+        if ($request->input('pass') != null) {
             $params["password"] = $request->input('pass');
         }
         $ldap = new UserController($params);
