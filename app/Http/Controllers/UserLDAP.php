@@ -18,7 +18,6 @@ class UserLDAP {
     public $baseDN;
     
     function __construct($params = array()) {
-        parent::__construct();
         //loadLib("org.programming.tolls.debuglib");
         if (isset($params["username"])) {
             $this->setUsername($params["username"]);
