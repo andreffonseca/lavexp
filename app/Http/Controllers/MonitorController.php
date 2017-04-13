@@ -7,25 +7,16 @@ use Illuminate\Support\Facades\View;
 
 class MonitorController extends Controller
 {
+    function __construct() {}
     
-    
-    function __construct() {
-        
-    }
-    
-    
-    public function index() {
-        
-    }
+    public function index() {}
     
     public function message(Request $request) {
-        
-        /***
-         * echo '<pre>';
+        /*
+         *  echo '<pre>';
             print_r($request->input());
             echo '</pre>';
             exit();
-
          */
         
         $message = new \App\Models\MonitorMessages();
@@ -59,14 +50,13 @@ class MonitorController extends Controller
         $message->sca_url = $request->input('url_2');
         
         $message->save();
-        
     }
 
-   public function message2(Request $request) {
-        $message2 = new \App\Models\MonitorMessages();
+   public function listAlerts(Request $request) {
+        $listAlerts = new \App\Models\MonitorMessages();
 
         //dd($message2->all());
-	return View::make('viewdata')->with('itsqd_mon_messages', $message2->all());
+        // return the view with interface to show all alerts
+	return View::make('viewdata')->with('itsqd_mon_messages', $listAlerts->all());
    }
-
 }

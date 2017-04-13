@@ -18,7 +18,7 @@
 
     <!-- ALERTS -->
     <!-- loop over the alerts and show off some things -->
-     <!-- @foreach ($itsqd_mon_messages as $alert)
+    @foreach ($itsqd_mon_messages as $alert)
 
         <!-- GET OUR BASIC ALERT INFORMATION -->
         <h2>ID={{ $alert->message_id }} HOST={{ $alert->host }} SERVICE={{ $alert->service }} <small>OUTPUT={{ $alert->out_1 }}</small></h2>
