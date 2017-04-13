@@ -20,20 +20,18 @@ class UserController extends Controller {
     function __construct($params = array()) {
         parent::__construct();
         //loadLib("org.programming.tolls.debuglib");
-        if (isset($params["username"])) {
-            $this->setUsername($params["username"]);
+        if ($params["username"] != null) {
+                        $this->setUsername($params["username"]);
         }
-        if (isset($params["password"])) {
-            $this->setPassword($params["password"]);
+        if ($params["password"] != null) {
+                        $this->setPassword($params["password"]);
         }
-        if (isset($params["server"])) {
-            $this->setServer($params["server"]);
+        if ($params["server"] != null) {
+                        $this->setServer($params["server"]);
         }
     }
     
-    public function index() {
-        
-    }
+    public function index() {}
     /*
      * Function to obtain information if current user is logged in or not
      * @param user Username for domain of LDAP
@@ -52,10 +50,10 @@ class UserController extends Controller {
     public function loginUser(Request $request) {
         // LDAP server can also be 'DCPT02VPW.siege.red'
         $params = array("username" => 'redoute_france\itxxx', 'password' => 'xxx', 'server' => 'ldap.siege.red');
-        if ($request->input('user') != null) {
+        if (isset($request->input('user'))) {
             $params["username"] = $request->input('user');
         }
-        if ($request->input('pass') != null) {
+        if (isset($request->input('pass'))) {
             $params["password"] = $request->input('pass');
         }
         $ldap = new UserController($params);
