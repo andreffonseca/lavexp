@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Exception;
 
 class UserLDAP {
     const LDAP_VERSION_1 = 1;
@@ -48,7 +47,7 @@ class UserLDAP {
     private function connect() {
         $this->connection = @ldap_connect($this->server);
         if(!$this->connection) {
-            throw new LDAPException("Error Connection do LDAP Server " . $this->server, LDAPException::LDAP_CONNECTION_ERROR);
+            throw new LDAPException("Error Connecting to LDAP Server " . $this->server, LDAPException::LDAP_CONNECTION_ERROR);
         }
 
         ldap_set_option($this->connection, LDAP_OPT_PROTOCOL_VERSION, UserLDAP::LDAP_VERSION_3);
@@ -61,7 +60,7 @@ class UserLDAP {
     private function bind() {
         $this->bind = @ldap_bind($this->connection, $this->username, $this->password);
         if(!$this->bind) {
-            throw new LDAPException('Error authenticating', LDAPException::LDAP_WRONG_AUTH_USER_PASS);
+            throw new LDAPException("Error authenticating in LDAP Server " . $this->server, LDAPException::LDAP_WRONG_AUTH_USER_PASS);
         }
     }
     public function close() {
