@@ -37,13 +37,14 @@ class UserLDAP {
      * Athenticate user in the DC
     */
     public function authenticate() {
-        try {
+        // Want to catch LDAPException on controller side
+        //try {
              $conn = $this->connect();
              $bind = $this->bind();
              //$this->close();
-        } catch (LDAPException $e) {
-             echo $e->getCode();
-        }
+        //} catch (LDAPException $e) {
+        //     echo $e->getCode();
+        //}
     }
     private function connect() {
         $this->connection = @ldap_connect($this->server);

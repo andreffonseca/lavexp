@@ -38,12 +38,23 @@ class UserController extends Controller {
         }
         $ldap = new UserLDAP($params);
         $ldap->baseDN = "OU=Users,OU=REDOUTE PT,OU=RED Branches,DC=siege,DC=red";
-        $ldap->authenticate();
-        var_dump("connect/bind result is " . $ldap . "<br />");
-        $user_data = $ldap->loadUserInfo($params["username"]);
-        var_dump("loadUserInfo result is " . $user_data . "<br />");
-        // Close Connection to LDAP server when no longer needed
-        $ldap->close();
+        try {
+            $ldap->authenticate();
+            var_dump("connect/bind result is " . $ldap->connection . "<br />");
+            $user_data = $ldap->loadUserInfo($params["username"]);
+            var_dump("loadUserInfo result is " . $user_data . "<br />");
+        } catch (LDAPException $e) {
+             echo $e->getMessage();
+        }
+        // Close Connection to LDAP server when no longer needed (Only if connection is not false)
+        if(!$$ldap->connection) {
+        } else {
+            $ldap->close();
+        }
+        //if user was correctly authenticated, return sucess json, otherwise failure json
+        //if()
+        //return view('welcome');
+        
         /*
         // Connect to LDAP server, must be a valid LDAP server!
         $ds = ldap_connect("ldap.siege.red");
