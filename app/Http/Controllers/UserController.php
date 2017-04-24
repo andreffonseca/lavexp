@@ -39,14 +39,15 @@ class UserController extends Controller {
         $ldap = new UserLDAP($params);
         $ldap->baseDN = "OU=Users,OU=REDOUTE PT,OU=RED Branches,DC=siege,DC=red";
         $ldap->authenticate();
-        var_dump("connect/bind result is " . $ds . "<br />");
-        // Connect to LDAP server, must be a valid LDAP server!
-        $ds = ldap_connect("ldap.siege.red");
+        var_dump("connect/bind result is " . $ldap . "<br />");
         $user_data = $ldap->loadUserInfo($params["username"]);
         var_dump("loadUserInfo result is " . $user_data . "<br />");
         // Close Connection to LDAP server when no longer needed
         $ldap->close();
         /*
+        // Connect to LDAP server, must be a valid LDAP server!
+        $ds = ldap_connect("ldap.siege.red");
+        var_dump("connect/bind result is " . $ds . "<br />");
         if ($ds) {
             $ub = ldap_bind($ds, "itxxx@siege.red", 'xxx');
             var_dump("bind result is " . $ub . "<br />");
