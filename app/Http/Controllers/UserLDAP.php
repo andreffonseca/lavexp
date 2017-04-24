@@ -62,7 +62,7 @@ class UserLDAP {
     private function bind() {
         $this->bind = @ldap_bind($this->connection, $this->username, $this->password);
         if(!$this->bind) {
-            throw new LDAPException("Error authenticating in LDAP Server " . $this->server, LDAPException::LDAP_WRONG_AUTH_USER_PASS);
+            throw new LDAPException("Error authenticating in LDAP Server " . $this->server);
         }
     }
     public function close() {
