@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use App\Exceptions\LDAPException;
 
 class UserLDAP {
     const LDAP_VERSION_1 = 1;
