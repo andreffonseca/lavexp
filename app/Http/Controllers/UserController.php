@@ -39,28 +39,39 @@ class UserController extends Controller {
         
         // Do not allow it users to login with itxxx user, only with ADM user
         if(strlen($params["username"])<4 || substr($params["username"], 0, 4) !== "adm-") {
-            //var_dump("<h4>Unable to connect to LDAP server</h4>");
             $data = [ 'errno' => '401', 'msg' => 'Bad credentials, you should authenticate with ADM user.' ];
             header('Content-type: application/json');
             return json_encode( $data );
-        } else {
-            var_dump("seems a valid adm user");
         }
         
         // Connect to LDAP server, must be a valid LDAP server!
-        $ds = ldap_connect("ldap.siege.red");
-        var_dump("connect result is " . $ds . "<br />");
-        if ($ds) {
+        $ldap_connect = ldap_connect("ldap.siege.red");
+        var_dump("connect result is " . $ldap_connect . "<br />");
+        if ($ldap_connect) {
             // can bind with redoute_france\adm-xxx@siege.red or adm-xxx@siege.red
             // can bind with redoute_france\itxxx@siege.red or itxxx@siege.red
             // need to add the domain to apply, no need for user to say it explicitly
-            $ub = ldap_bind($ds, $params["username"]."@siege.red", $params["password"]);
-            var_dump("bind result is " . $ub . "<br />");
+            $ldap_bind = ldap_bind($ldap_connect, $params["username"]."@siege.red", $params["password"]);
+            var_dump("bind result is " . $ldap_bind . "<br />");
+            if ($ldap_bind) {
+                $searchFilter = "(&(samaccountname=" . $samAccName . "))";
+                $baseDN = "OU=Users,OU=REDOUTE PT,OU=RED Branches,DC=siege,DC=red";
+                $result = ldap_search($ldap_connect, $baseDN, $searchFilter);
+                var_dump("result is " . $result . "<br />");
+                $user_data = ldap_get_entries($ldap_connect, $result);
+                var_dump("search result is " . $user_data . "<br />");
+                ldap_close($ldap_connect);
+            } else {
+                ldap_close($ldap_connect);
+                $data = [ 'errno' => '401', 'msg' => 'Bad credentials.' ];
+                header('Content-type: application/json');
+                return json_encode( $data );
+            }
         } else {
             //var_dump("<h4>Unable to connect to LDAP server</h4>");
             $data = [ 'errno' => '401', 'msg' => 'Unable to connect to LDAP server' ];
             header('Content-type: application/json');
-            echo json_encode( $data );
+            return json_encode( $data );
         }
         
         // using class from -> Andre Fonseca
