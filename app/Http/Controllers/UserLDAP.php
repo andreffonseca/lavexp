@@ -14,8 +14,8 @@ class UserLDAP {
     private $username;
     private $password;
     private $server;
-    private $connection;
-    private $bind;
+    public $connection;
+    public $bind;
     public $baseDN;
     
     function __construct($params = array()) {
@@ -49,9 +49,9 @@ class UserLDAP {
     }
     private function connect() {
         $this->connection = @ldap_connect($this->server);
-        if(!$this->connection) {
+        /*if(!$this->connection) {
             throw new LDAPException("Error Connecting to LDAP Server " . $this->server, LDAPException::LDAP_CONNECTION_ERROR);
-        }
+        }*/
 
         ldap_set_option($this->connection, LDAP_OPT_PROTOCOL_VERSION, UserLDAP::LDAP_VERSION_3);
         ldap_set_option($this->connection, LDAP_OPT_REFERRALS, 0);
@@ -62,9 +62,9 @@ class UserLDAP {
     */
     private function bind() {
         $this->bind = @ldap_bind($this->connection, $this->username, $this->password);
-        if(!$this->bind) {
+        /*if(!$this->bind) {
             throw new LDAPException("Error authenticating in LDAP Server " . $this->server, LDAPException::LDAP_WRONG_AUTH_USER_PASS);
-        }
+        }*/
     }
     public function close() {
         @ldap_close($this->connection);
