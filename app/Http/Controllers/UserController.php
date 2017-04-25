@@ -37,15 +37,24 @@ class UserController extends Controller {
             $params["password"] = $request->input('pass');
         }
         
+        // Do not allow it users to login with itxxx user, only with ADM user
+        if(strlen($params["username"])<4 || substr($params["username"], 0, 4) !== "adm-") {
+            //var_dump("<h4>Unable to connect to LDAP server</h4>");
+            $data = [ 'errno' => '401', 'msg' => 'Bad credentials, you should authenticate with ADM user.' ];
+            header('Content-type: application/json');
+            return json_encode( $data );
+        } else {
+            var_dump("seems a valid adm user");
+        }
+        
         // Connect to LDAP server, must be a valid LDAP server!
         $ds = ldap_connect("ldap.siege.red");
         var_dump("connect result is " . $ds . "<br />");
         if ($ds) {
+            // can bind with redoute_france\adm-xxx@siege.red or adm-xxx@siege.red
+            // can bind with redoute_france\itxxx@siege.red or itxxx@siege.red
             // need to add the domain to apply, no need for user to say it explicitly
-            //$ub = ldap_bind($ds, $params["username"]."@siege.red", $params["password"]);
-            // could not bind itxxx@siege.red, but could bind adm-xxx@siege.red
-            // can bind redoute_france\itxxx ???
-            $ub = ldap_bind($ds, $params["username"], $params["password"]);
+            $ub = ldap_bind($ds, $params["username"]."@siege.red", $params["password"]);
             var_dump("bind result is " . $ub . "<br />");
         } else {
             //var_dump("<h4>Unable to connect to LDAP server</h4>");
