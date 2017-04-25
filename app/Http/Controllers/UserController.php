@@ -56,7 +56,7 @@ class UserController extends Controller {
             if($ldap_bind) {
                 var_dump("bind result is " . $ldap_bind . "<br />");
                 $searchFilter = "(&(samaccountname=" . $params["username"] . "))";
-                $baseDN = "OU=Users,OU=REDOUTE PT,OU=RED Branches,DC=siege,DC=red";
+                $baseDN = "DC=siege,DC=red";
                 $result = ldap_search($ldap_connect, $baseDN, $searchFilter);
                 var_dump("result is " . $result . "<br />");
                 $user_data = ldap_get_entries($ldap_connect, $result);
