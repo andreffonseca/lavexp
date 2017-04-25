@@ -56,13 +56,10 @@ class UserController extends Controller {
             ldap_set_option($ldap_connect, LDAP_OPT_REFERRALS, 0);
             $ldap_bind = @ldap_bind($ldap_connect, $params["username"]."@siege.red", $params["password"]);
             if($ldap_bind) {
-                var_dump("bind result is " . $ldap_bind . "<br />");
                 $searchFilter = "(&(samaccountname=" . $params["username"] . "))";
-                $baseDN = "DC=siege,DC=red";
-                $result = ldap_search($ldap_connect, $baseDN, $searchFilter);
-                var_dump("result is " . $result . "<br />");
+                $result = ldap_search($ldap_connect, "DC=siege,DC=red", $searchFilter);
                 $user_data = ldap_get_entries($ldap_connect, $result);
-                var_dump($user_data);
+                var_dump($user_data[0]);
                 ldap_close($ldap_connect);
             } else {
                 ldap_close($ldap_connect);
