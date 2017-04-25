@@ -59,7 +59,7 @@ class UserController extends Controller {
                 $searchFilter = "(&(samaccountname=" . $params["username"] . "))";
                 $result = ldap_search($ldap_connect, "DC=siege,DC=red", $searchFilter);
                 $user_data = ldap_get_entries($ldap_connect, $result);
-                var_dump($user_data[0]);
+                var_dump($user_data[0]['givenname']);
                 ldap_close($ldap_connect);
             } else {
                 ldap_close($ldap_connect);
