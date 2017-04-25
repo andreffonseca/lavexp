@@ -36,6 +36,25 @@ class UserController extends Controller {
         if ($request->input('pass') != null) {
             $params["password"] = $request->input('pass');
         }
+        
+        // Connect to LDAP server, must be a valid LDAP server!
+        $ds = ldap_connect("ldap.siege.red");
+        var_dump("connect result is " . $ds . "<br />");
+        if ($ds) {
+            // need to add the domain to apply, no need for user to say it explicitly
+            $ub = ldap_bind($ds, $params["username"]."@siege.red", $params["password"]);
+            var_dump("bind result is " . $ub . "<br />");
+        } else {
+            //var_dump("<h4>Unable to connect to LDAP server</h4>");
+            $data = [ 'errno' => '401', 'msg' => 'Unable to connect to LDAP server' ];
+            header('Content-type: application/json');
+            echo json_encode( $data );
+        }
+        
+        // using class from -> Andre Fonseca
+        // problem using LDAPException - not explicit what error was
+        // after bypassing LDAPException, it seems bind not made correctly, does not return bind result either with good or bad credentials
+        /*
         $ldap = new UserLDAP($params);
         $ldap->baseDN = "OU=Users,OU=REDOUTE PT,OU=RED Branches,DC=siege,DC=red";
         //try {
@@ -55,20 +74,7 @@ class UserController extends Controller {
         //if user was correctly authenticated, return sucess json, otherwise failure json
         //if()
         //return view('welcome');
-        
-        /*
-        // Connect to LDAP server, must be a valid LDAP server!
-        $ds = ldap_connect("ldap.siege.red");
-        var_dump("connect/bind result is " . $ds . "<br />");
-        if ($ds) {
-            $ub = ldap_bind($ds, "itxxx@siege.red", 'xxx');
-            var_dump("bind result is " . $ub . "<br />");
-        } else {
-            //var_dump("<h4>Unable to connect to LDAP server</h4>");
-            $data = [ 'errno' => '401', 'msg' => 'Unable to connect to LDAP server' ];
-            header('Content-type: application/json');
-            echo json_encode( $data );
-        }*/
+        */
         die();
     }
     
