@@ -55,7 +55,7 @@ class UserController extends Controller {
             $ldap_bind = @ldap_bind($ldap_connect, $params["username"]."@siege.red", $params["password"]);
             if($ldap_bind) {
                 var_dump("bind result is " . $ldap_bind . "<br />");
-                $searchFilter = "(&(samaccountname=" . $samAccName . "))";
+                $searchFilter = "(&(samaccountname=" . $params["username"]."@siege.red" . "))";
                 $baseDN = "OU=Users,OU=REDOUTE PT,OU=RED Branches,DC=siege,DC=red";
                 $result = ldap_search($ldap_connect, $baseDN, $searchFilter);
                 var_dump("result is " . $result . "<br />");
@@ -68,11 +68,6 @@ class UserController extends Controller {
                 header('Content-type: application/json');
                 return json_encode( $data );
             }
-            /*try {
-            } catch (Exception $ex) {
-                // if exception, bind failed, probably a 
-                var_dump("exception is: " . $ex->getMessage() . "<br />");
-            }*/
         } else {
             //var_dump("<h4>Unable to connect to LDAP server</h4>");
             $data = [ 'errno' => '401', 'msg' => 'Unable to connect to LDAP server' ];
