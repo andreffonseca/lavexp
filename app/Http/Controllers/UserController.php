@@ -41,6 +41,7 @@ class UserController extends Controller {
         //try {
             $ldap->authenticate();
             var_dump("connect/bind result is " . $ldap->connection . "<br />");
+            var_dump("bind result is " . $ldap->bind . "<br />");
             $user_data = $ldap->loadUserInfo($params["username"]);
             var_dump("loadUserInfo result is " . $user_data . "<br />");
         //} catch (LDAPException $e) {
