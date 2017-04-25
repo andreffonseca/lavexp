@@ -38,15 +38,14 @@ class UserController extends Controller {
         }
         
         // Do not allow it users to login with itxxx user, only with ADM user
-        if(strlen($params["username"])<4 || substr($params["username"], 0, 4) !== "adm-") {
+        /*if(strlen($params["username"])<4 || substr($params["username"], 0, 4) !== "adm-") {
             $data = [ 'errno' => '401', 'msg' => 'Bad credentials, you should authenticate with ADM user.' ];
             header('Content-type: application/json');
             return json_encode( $data );
-        }
+        }*/
         
         // Connect to LDAP server, must be a valid LDAP server!
         $ldap_connect = ldap_connect("ldap.siege.red");
-        var_dump("connect result is " . $ldap_connect . "<br />");
         if ($ldap_connect) {
             // can bind with redoute_france\adm-xxx@siege.red or adm-xxx@siege.red
             // can bind with redoute_france\itxxx@siege.red or itxxx@siege.red
@@ -59,13 +58,15 @@ class UserController extends Controller {
                 $searchFilter = "(&(samaccountname=" . $params["username"] . "))";
                 $result = ldap_search($ldap_connect, "DC=siege,DC=red", $searchFilter);
                 $user_data = ldap_get_entries($ldap_connect, $result);
-                var_dump($user_data[0]['givenname'][0]);
-                var_dump("lastname:");
-                var_dump($user_data[0]['sn'][0]);
-                var_dump("------------------------");
-                var_dump($user_data[0]);
-                var_dump("------------------------");
-                var_dump($user_data);
+                $first_name = $user_data[0]['givenname'][0];
+                // do givenname remover a parte ADM se existir
+                if(strlen($first_name)>4 && substr($first_name, 0, 4) === "adm-") {
+                    $first_name = substr($first_name, 4);
+                }
+                $last_name = $user_data[0]['sn'][0];
+                // user main id, his email
+                $user_id = $user_data[0]['userprincipalname'][0];
+                // $user_data[0]['displayname'][0] devolve o nome completo, pode ter o ADM
                 ldap_close($ldap_connect);
             } else {
                 ldap_close($ldap_connect);
