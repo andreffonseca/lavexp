@@ -51,9 +51,9 @@ class UserController extends Controller {
             // can bind with redoute_france\adm-xxx@siege.red or adm-xxx@siege.red
             // can bind with redoute_france\itxxx@siege.red or itxxx@siege.red
             // need to add the domain to apply, no need for user to say it explicitly
-            $ldap_bind = ldap_bind($ldap_connect, $params["username"]."@siege.red", $params["password"]);
-            var_dump("bind result is " . $ldap_bind . "<br />");
-            if ($ldap_bind) {
+            try {
+                $ldap_bind = ldap_bind($ldap_connect, $params["username"]."@siege.red", $params["password"]);
+                var_dump("bind result is " . $ldap_bind . "<br />");
                 $searchFilter = "(&(samaccountname=" . $samAccName . "))";
                 $baseDN = "OU=Users,OU=REDOUTE PT,OU=RED Branches,DC=siege,DC=red";
                 $result = ldap_search($ldap_connect, $baseDN, $searchFilter);
@@ -61,7 +61,9 @@ class UserController extends Controller {
                 $user_data = ldap_get_entries($ldap_connect, $result);
                 var_dump("search result is " . $user_data . "<br />");
                 ldap_close($ldap_connect);
-            } else {
+            } catch (Exception $ex) {
+                // if exception, bind failed, probably a 
+                var_dump("exception is: " . $ex->getMessage() . "<br />");
                 ldap_close($ldap_connect);
                 $data = [ 'errno' => '401', 'msg' => 'Bad credentials.' ];
                 header('Content-type: application/json');
