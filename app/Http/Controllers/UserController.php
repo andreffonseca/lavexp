@@ -59,16 +59,16 @@ class UserController extends Controller {
                 $result = ldap_search($ldap_connect, "DC=siege,DC=red", $searchFilter);
                 $user_data = ldap_get_entries($ldap_connect, $result);
                 $first_name = $user_data[0]['givenname'][0];
-                // do givenname remover a parte ADM se existir
-                if(strlen($first_name)>4 && substr($first_name, 0, 4) === "adm-") {
+                // from givenname remove ADM part if exists
+                if(strlen($first_name)>4 && strcasecmp(substr($first_name, 0, 4), "ADM ") == 0) {
                     $first_name = substr($first_name, 4);
                 }
                 $last_name = $user_data[0]['sn'][0];
-                // user main id, his email
+                // the user main id, normally his email
                 $user_id = $user_data[0]['userprincipalname'][0];
-                // $user_data[0]['displayname'][0] devolve o nome completo, pode ter o ADM
+                // $user_data[0]['displayname'][0] returns complete name, may have ADM in it
                 ldap_close($ldap_connect);
-                $data = [ 'errno' => '200', 'msg' => 'OK', 'username' => $user_id, 'name' => $first_name . $last_name ];
+                $data = [ 'errno' => '200', 'msg' => 'OK', 'username' => $user_id, 'name' => $first_name . ' ' . $last_name ];
                 header('Content-type: application/json');
                 return json_encode( $data );
             } else {
