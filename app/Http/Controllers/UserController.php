@@ -60,6 +60,8 @@ class UserController extends Controller {
                 $result = ldap_search($ldap_connect, "DC=siege,DC=red", $searchFilter);
                 $user_data = ldap_get_entries($ldap_connect, $result);
                 var_dump($user_data[0]['givenname'][0]);
+                var_dump("lastname:");
+                var_dump($user_data[0]['cn'][0]);
                 var_dump("------------------------");
                 var_dump($user_data[0]);
                 var_dump("------------------------");
