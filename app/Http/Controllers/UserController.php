@@ -60,7 +60,7 @@ class UserController extends Controller {
                 $result = ldap_search($ldap_connect, $baseDN, $searchFilter);
                 var_dump("result is " . $result . "<br />");
                 $user_data = ldap_get_entries($ldap_connect, $result);
-                var_dump("search result is " . $user_data . "<br />");
+                var_dump($user_data);
                 ldap_close($ldap_connect);
             } else {
                 ldap_close($ldap_connect);
