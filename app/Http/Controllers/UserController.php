@@ -52,8 +52,8 @@ class UserController extends Controller {
             // can bind with redoute_france\itxxx@siege.red or itxxx@siege.red
             // need to add the domain to apply, no need for user to say it explicitly
             // @ldap_bind suppresses error message, for some resason I could not catch the exception on it
-            ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
-            ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
+            ldap_set_option($ldap_connect, LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($ldap_connect, LDAP_OPT_REFERRALS, 0);
             $ldap_bind = @ldap_bind($ldap_connect, $params["username"]."@siege.red", $params["password"]);
             if($ldap_bind) {
                 var_dump("bind result is " . $ldap_bind . "<br />");
