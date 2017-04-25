@@ -38,13 +38,14 @@ class UserLDAP {
     */
     public function authenticate() {
         // Want to catch LDAPException on controller side
-        //try {
+        try {
              $conn = $this->connect();
              $bind = $this->bind();
              //$this->close();
-        //} catch (LDAPException $e) {
-        //     echo $e->getCode();
-        //}
+        } catch (LDAPException $e) {
+            throw $e;
+            //     echo $e->getCode();
+        }
     }
     private function connect() {
         $this->connection = @ldap_connect($this->server);
@@ -62,7 +63,7 @@ class UserLDAP {
     private function bind() {
         $this->bind = @ldap_bind($this->connection, $this->username, $this->password);
         if(!$this->bind) {
-            throw new LDAPException("Error authenticating in LDAP Server " . $this->server);
+            throw new LDAPException("Error authenticating in LDAP Server " . $this->server, LDAPException::LDAP_WRONG_AUTH_USER_PASS);
         }
     }
     public function close() {
