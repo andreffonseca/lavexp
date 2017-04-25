@@ -42,7 +42,10 @@ class UserController extends Controller {
         var_dump("connect result is " . $ds . "<br />");
         if ($ds) {
             // need to add the domain to apply, no need for user to say it explicitly
-            $ub = ldap_bind($ds, $params["username"]."@siege.red", $params["password"]);
+            //$ub = ldap_bind($ds, $params["username"]."@siege.red", $params["password"]);
+            // could not bind itxxx@siege.red, but could bind adm-xxx@siege.red
+            // can bind redoute_france\itxxx ???
+            $ub = ldap_bind($ds, $params["username"], $params["password"]);
             var_dump("bind result is " . $ub . "<br />");
         } else {
             //var_dump("<h4>Unable to connect to LDAP server</h4>");
