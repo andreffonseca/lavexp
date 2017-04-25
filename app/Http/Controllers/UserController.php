@@ -68,6 +68,9 @@ class UserController extends Controller {
                 $user_id = $user_data[0]['userprincipalname'][0];
                 // $user_data[0]['displayname'][0] devolve o nome completo, pode ter o ADM
                 ldap_close($ldap_connect);
+                $data = [ 'errno' => '200', 'msg' => 'OK', 'username' => $user_id, 'name' => $first_name . $last_name ];
+                header('Content-type: application/json');
+                return json_encode( $data );
             } else {
                 ldap_close($ldap_connect);
                 $data = [ 'errno' => '401', 'msg' => 'Bad credentials.' ];
@@ -75,7 +78,6 @@ class UserController extends Controller {
                 return json_encode( $data );
             }
         } else {
-            //var_dump("<h4>Unable to connect to LDAP server</h4>");
             $data = [ 'errno' => '401', 'msg' => 'Unable to connect to LDAP server' ];
             header('Content-type: application/json');
             return json_encode( $data );
