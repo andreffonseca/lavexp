@@ -51,8 +51,9 @@ class UserController extends Controller {
             // can bind with redoute_france\adm-xxx@siege.red or adm-xxx@siege.red
             // can bind with redoute_france\itxxx@siege.red or itxxx@siege.red
             // need to add the domain to apply, no need for user to say it explicitly
-            try {
-                $ldap_bind = ldap_bind($ldap_connect, $params["username"]."@siege.red", $params["password"]);
+            // @ldap_bind suppresses error message, for some resason I could not catch the exception on it
+            $ldap_bind = @ldap_bind($ldap_connect, $params["username"]."@siege.red", $params["password"]);
+            if($ldap_bind) {
                 var_dump("bind result is " . $ldap_bind . "<br />");
                 $searchFilter = "(&(samaccountname=" . $samAccName . "))";
                 $baseDN = "OU=Users,OU=REDOUTE PT,OU=RED Branches,DC=siege,DC=red";
@@ -61,14 +62,17 @@ class UserController extends Controller {
                 $user_data = ldap_get_entries($ldap_connect, $result);
                 var_dump("search result is " . $user_data . "<br />");
                 ldap_close($ldap_connect);
-            } catch (Exception $ex) {
-                // if exception, bind failed, probably a 
-                var_dump("exception is: " . $ex->getMessage() . "<br />");
+            } else {
                 ldap_close($ldap_connect);
                 $data = [ 'errno' => '401', 'msg' => 'Bad credentials.' ];
                 header('Content-type: application/json');
                 return json_encode( $data );
             }
+            /*try {
+            } catch (Exception $ex) {
+                // if exception, bind failed, probably a 
+                var_dump("exception is: " . $ex->getMessage() . "<br />");
+            }*/
         } else {
             //var_dump("<h4>Unable to connect to LDAP server</h4>");
             $data = [ 'errno' => '401', 'msg' => 'Unable to connect to LDAP server' ];
