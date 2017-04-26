@@ -44,9 +44,9 @@ class UserController extends Controller {
             if ($validator->fails()) {
                 return Redirect::to('loginpage')
                     ->withErrors($validator) // send back all errors to the login form
-                    ->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
+                    ->withInput(Input::except('pass')); // send back the input (not the password) so that we can repopulate the form
             } else {
-                $response = redirect()->route('login', ['user' => Input::get('user'), 'pass' => Input::get('pass')]);
+                $response = Redirect::to('login')->withInput();
                 var_dump($response);
 
                 // attempt to do the login

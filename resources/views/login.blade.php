@@ -1,4 +1,4 @@
-<!-- app/views/login.blade.php --><
+<!-- app/views/login.blade.php -->
 
 <!doctype html>
 <html>
@@ -13,7 +13,7 @@
     </div>
     <form action=loginpage method="post">
         <label for="username">Name:</label>
-        <input type="text" id="username" name="user"><br>
+        <input type="text" id="username" name="user" value="{{ old('username') }}"><br>
         {{ $errors->has('user') ? 'has-error' : '' }}<br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="pass"><br>
