@@ -47,10 +47,9 @@ class UserController extends Controller {
                     ->withInput(Input::except('pass')); // send back the input (not the password) so that we can repopulate the form
             } else {
                 $response = Redirect::to('login')->withInput();
-                var_dump($response);
 
                 // attempt to do the login
-                /*if (Auth::attempt($userdata)) {
+                if ($response['status']=='200') {
                     // validation successful!
                     // redirect them to the secure section or whatever
                     // return Redirect::to('secure');
@@ -58,8 +57,9 @@ class UserController extends Controller {
                     echo 'SUCCESS!';
                 } else {        
                     // validation not successful, send back to form 
-                    return Redirect::to('login');
-                }*/
+                    //return Redirect::to('login');
+                    echo 'NOT SUCCESS!';
+                }
             }
         } else {
             // already logged in, send to home page
