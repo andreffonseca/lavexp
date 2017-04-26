@@ -11,7 +11,7 @@
             <h2>Please login to your account</h2>
         </div>
     </div>
-    <form action=url('loginpage') method="post">
+    <form action=loginpage method="post">
         <label for="username">Name:</label>
         <input type="text" id="username" name="user"><br>
         {{ $errors->has('user') ? 'has-error' : '' }}<br>
