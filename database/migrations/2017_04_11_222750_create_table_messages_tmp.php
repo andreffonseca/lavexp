@@ -1,3 +1,5 @@
+// app/database/migrations/####_##_##_######_create_table_messages_tmp.php
+
 <?php
 
 use Illuminate\Support\Facades\Schema;

@@ -1,3 +1,5 @@
+// app/Models/MonitorMessages.php
+
 <?php
 
 namespace App\Models;
@@ -6,8 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class MonitorMessages extends Model
 {
-    
-    
-    protected $table = 'itsqd_mon_messages';
-    
+    protected $table = 'itsqd_mon_messages';   
 }

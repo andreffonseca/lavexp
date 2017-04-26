@@ -15,9 +15,20 @@ class UserController extends Controller {
      * @param user Username for domain of LDAP
      */
     public function getUserInfo(Request $request) {
-        $data = [ 'errno' => '401', 'msg' => 'Unauthorized' ];
-        header('Content-type: application/json');
-        echo json_encode( $data );
+        // verify if user is logged in from session variables
+        if (!isset($_SESSION['username'])) {
+            $data = [ 'status' => '401', 'msg' => 'Unauthorized' ];
+            header('Content-type: application/json');
+            echo json_encode( $data );
+            // $url = BASE_URL . 'index.php'; // Define the URL.
+            // ob_end_clean(); // Delete the buffer.
+            // header("Location: ./login.php");
+            // exit(); // Quit the script.
+        } else {
+            $data = [ 'status' => '200', 'msg' => 'OK', 'username' => $_SESSION['username'], 'name' => $_SESSION['name'] ];
+            header('Content-type: application/json');
+            echo json_encode( $data );
+        }
     }
     
     /*
@@ -39,7 +50,7 @@ class UserController extends Controller {
         
         // Do not allow it users to login with itxxx user, only with ADM user
         /*if(strlen($params["username"])<4 || substr($params["username"], 0, 4) !== "adm-") {
-            $data = [ 'errno' => '401', 'msg' => 'Bad credentials, you should authenticate with ADM user.' ];
+            $data = [ 'status' => '401', 'msg' => 'Bad credentials, you should authenticate with ADM user.' ];
             header('Content-type: application/json');
             return json_encode( $data );
         }*/
@@ -58,6 +69,7 @@ class UserController extends Controller {
                 $searchFilter = "(&(samaccountname=" . $params["username"] . "))";
                 $result = ldap_search($ldap_connect, "DC=siege,DC=red", $searchFilter);
                 $user_data = ldap_get_entries($ldap_connect, $result);
+                ldap_close($ldap_connect);
                 $first_name = $user_data[0]['givenname'][0];
                 // from givenname remove ADM part if exists
                 if(strlen($first_name)>4 && strcasecmp(substr($first_name, 0, 4), "ADM ") == 0) {
@@ -67,18 +79,19 @@ class UserController extends Controller {
                 // the user main id, normally his email
                 $user_id = $user_data[0]['userprincipalname'][0];
                 // $user_data[0]['displayname'][0] returns complete name, may have ADM in it
-                ldap_close($ldap_connect);
-                $data = [ 'errno' => '200', 'msg' => 'OK', 'username' => $user_id, 'name' => $first_name . ' ' . $last_name ];
+                $_SESSION['username'] = $user_id;
+                $_SESSION['name'] = $first_name . ' ' . $last_name;
+                $data = [ 'status' => '200', 'msg' => 'OK', 'username' => $_SESSION['username'], 'name' => $_SESSION['name'] ];
                 header('Content-type: application/json');
                 return json_encode( $data );
             } else {
                 ldap_close($ldap_connect);
-                $data = [ 'errno' => '401', 'msg' => 'Bad credentials.' ];
+                $data = [ 'status' => '401', 'msg' => 'Bad credentials.' ];
                 header('Content-type: application/json');
                 return json_encode( $data );
             }
         } else {
-            $data = [ 'errno' => '401', 'msg' => 'Unable to connect to LDAP server' ];
+            $data = [ 'status' => '401', 'msg' => 'Unable to connect to LDAP server' ];
             header('Content-type: application/json');
             return json_encode( $data );
         }
@@ -111,7 +124,14 @@ class UserController extends Controller {
     }
     
     public function logoutUser(Request $request) {
-        $data = [ 'errno' => '401', 'msg' => 'Unauthorized' ];
+        // remove session variables that indicate user is logged
+        unset($_SESSION['username']);
+        unset($_SESSION['name']);
+        $_SESSION = array(); // Destroy the variables.
+        session_destroy(); // Destroy the session itself.
+        setcookie (session_name(), '', time()-300); // Destroy the cookie.
+        // update user as logged out in database (table of logged users)
+        $data = [ 'status' => '401', 'msg' => 'Unauthorized' ];
         header('Content-type: application/json');
         echo json_encode( $data );
     }
