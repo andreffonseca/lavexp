@@ -16,7 +16,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // UserController = controller that handles User Management
+// Routes for showing login page if not logged in, otherwise send to welcome main page
+Route::get('/loginpage', 'UserController@showLogin');
+// POST processes the login from /loginpage
+Route::post('/loginpage', 'UserController@doLogin');
 // Route for obtaining info of current user (by current session)
 Route::get('/userinfo', 'UserController@getUserInfo');
 Route::post('/userinfo', 'UserController@getUserInfo');

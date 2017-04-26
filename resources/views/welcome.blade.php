@@ -88,6 +88,9 @@
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
+                    @if (session('username'))
+                        <a href="{{ URL::to('logout') }}">Logout</a>
+                    @endif
                 </div>
             </div>
         </div>
