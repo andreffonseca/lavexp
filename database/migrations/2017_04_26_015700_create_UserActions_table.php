@@ -1,4 +1,4 @@
-// app/database/migrations/####_##_##_######_create_UserStatus_table.php
+// app/database/migrations/####_##_##_######_create_UserActions_table.php
 
 <?php
 
@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserStatusTable extends Migration
+class CreateUserActionsTable extends Migration
 {
     /**
      * Run the migrations.
