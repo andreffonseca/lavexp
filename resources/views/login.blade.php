@@ -14,7 +14,7 @@
 <h1>Login</h1>
 <div class="body">
 @if ($err)
-  {{ echo '<p class="err visible">', htmlentities($err->getMessage()) , '</p>'; }}
+  <p class="err visible"> {{ htmlentities($err->getMessage()) }} </p>
 @endif
 <p><label for="login-usr">Username</label> <span><input id="login-usr" name="user" type="text" placeholder="username"<?php if ($user['defined']) echo ' value="', htmlentities($user['value']), '"'; ?> required></span></p>
 <p><label for="login-pwd">Password</label> <span><input id="login-pwd" name="pass" type="password" placeholder="password" required></span></p>
