@@ -19,9 +19,10 @@ class UserController extends Controller {
      */
     public function showLogin(Request $request) {
         $err = false;
+        $user = $pass = ['defined' => false, 'valid' => false, 'value' => null];
         session_start();
         if (!isset($_SESSION['username'])) {
-            return View::make('login')->with(['err'=>$err]);
+            return View::make('login')->with(['err'=>$err])->with(['user'=>$user]);
         } else {
             // already logged in, send to home page
             return Redirect::to('/');
