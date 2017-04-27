@@ -50,7 +50,7 @@ class UserController extends Controller {
                     ->withErrors($validator) // send back all errors to the login form
                     ->withInput(Input::except('pass')); // send back the input (not the password) so that we can repopulate the form
             } else {
-                $response = loginUser($request);
+                $response = $this->loginUser($request);
 
                 // attempt to do the login
                 if ($response['status']=='200') {
