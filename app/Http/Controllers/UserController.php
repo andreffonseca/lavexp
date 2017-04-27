@@ -21,7 +21,7 @@ class UserController extends Controller {
         $err = false;
         session_start();
         if (!isset($_SESSION['username'])) {
-            return View::make('login')->with(['data'=>$err]);
+            return View::make('login')->with(['err'=>$err]);
         } else {
             // already logged in, send to home page
             return Redirect::to('/');
