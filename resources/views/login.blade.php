@@ -6,7 +6,6 @@
 <meta charset="utf-8">
 <title>Monitor: Login</title>
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/login.css') }}">
-{{ HTML::style('css/login.css', array('media' => 'print')) }}
 </head>
 <body>
 <form id="login" action="" method="post">
