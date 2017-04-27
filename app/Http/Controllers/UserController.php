@@ -101,7 +101,6 @@ class UserController extends Controller {
      */
     
     public function loginUser(Request $request) {
-        session_start();
         // LDAP server can also be 'DCPT02VPW.siege.red'
         $params = array("username" => 'redoute_france\itxxx', 'password' => 'xxx', 'server' => 'ldap.siege.red');
         if ($request->input('user') != null) {
