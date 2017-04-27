@@ -1,0 +1,44 @@
+/* RESETS */
+
+html, body, p, pre, ul, ol, li, dl, dt, dd, form { margin: 0; padding: 0 }
+h1, h2, h3, h4, h5, button, input, textarea { margin: 0; padding: 0; color: inherit; font: inherit }
+iframe, header, footer, section, nav, article, figure, figcaption { display: block; margin: 0; padding: 0 }
+::-moz-focus-inner { padding: 0; margin: -1px }
+a { color: inherit; text-decoration: none }
+ul, ol { list-style-type: none }
+img, iframe { border: none }
+img { max-width: 100% }
+pre { white-space: pre-wrap }
+sup { vertical-align: text-top; display: inline-block; font-size: 80%; margin-top: -2px }
+table { border-collapse: collapse; border-spacing: 0; empty-cells: show }
+textarea { resize: vertical }
+
+/*
+ * CONTAINERS
+ */
+
+html { height: 100%; -webkit-text-size-adjust: none }
+body { position: relative; min-height: 100%; font-size: 14px; font-family: "Open Sans", Arial, Helvetica, sans-serif }
+body:before { content: ""; display: block; height: 140px }
+
+/*
+ * LOGIN
+ */
+
+#login {position:fixed;top:0;right:0;bottom:0;left:0;text-align:center}
+#login::before {content:"";display:inline-block;width:1px;height:80%;margin-left:-1px;vertical-align:middle}
+#login::after {content:""; position:absolute; z-index:-1; width:100%; height:100%; top:0; left:0; background-color:#000; opacity:.8}
+#login>div {display:inline-block;width:300px;vertical-align:middle; background-color:#fff; padding:30px}
+
+#login h1,
+#login .body>p>label {display:none}
+#login .body>p {margin-bottom:10px}
+#login .body>p:first-child {margin-top:0}
+#login .body>p>span {display:block}
+#login .body>p>span>input {display:block;width:100%;padding:10px;background-color:#f0f0f0;border:none}
+
+#login .body>.err {color:#ff0000;font-size:90%;margin-bottom:20px;display:none}
+#login .body>.err.visible {display:block}
+
+#login-submit {display:block;width:100%;border:none;background-color:#00B242;color:#fff}
+#login-submit>* {display:block;padding:10px;}

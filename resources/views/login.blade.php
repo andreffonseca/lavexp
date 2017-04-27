@@ -3,21 +3,24 @@
 <!doctype html>
 <html>
 <head>
-<title>Please Login</title>
+<meta charset="utf-8">
+<title>Monitor: Login</title>
+<link rel="stylesheet" type="text/css" href="{{ asset('/css/login.css') }}">
+{{ HTML::style('css/login.css', array('media' => 'print')) }}
 </head>
 <body>
-<div class="row">
-        <div class="page-header">
-            <h2>Please login to your account</h2>
-        </div>
-    </div>
-    <form action=loginpage method="post">
-        <label for="username">Name:</label>
-        <input type="text" id="username" name="user" value="{{ old('username') }}"><br>
-        {{ $errors->has('user') ? 'has-error' : '' }}<br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="pass"><br>
-        {{ $errors->has('pass') ? 'has-error' : '' }}<br>
-        <input type="submit">
-    </form>
+<form id="login" action="" method="post">
+<div>
+<h1>Login</h1>
+<div class="body">
+@if ($err)
+  {{ echo '<p class="err visible">', htmlentities($err->getMessage()) , '</p>'; }}
+@endif
+<p><label for="login-usr">Username</label> <span><input id="login-usr" name="user" type="text" placeholder="username"<?php if ($user['defined']) echo ' value="', htmlentities($user['value']), '"'; ?> required></span></p>
+<p><label for="login-pwd">Password</label> <span><input id="login-pwd" name="pass" type="password" placeholder="password" required></span></p>
 </div>
+<p><button id="login-submit" type="submit"><span>Login</span></button></p>
+</div>
+</form>
+</body>
+</html>

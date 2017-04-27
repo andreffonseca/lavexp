@@ -11,23 +11,39 @@
 |
 */
 
+// --- Use of env.conf.php from Cardoso? ----------------------
+// define('APP_CONFIG_DIR', dirname(__FILE__));
+// define('APP_ROOT_DIR', realpath(APP_CONFIG_DIR.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR));
+// define('APP_INCLUDE_DIR', APP_ROOT_DIR.DIRECTORY_SEPARATOR.'include');
+// define('APP_BIN_DIR', APP_ROOT_DIR.DIRECTORY_SEPARATOR.'bin');
+// --- Error Reporting ----------------------------------------
+// not sure if I can declare the error reporting here!
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors', 'On');
+
+function app_error_handler($errno, $errmsg, $errfile, $errline) {
+  //if (ini_get('error_reporting')) throw new ErrorException($errmsg, 0, $errno, $errfile, $errline);
+  throw new ErrorException("$errno: $errmsg", 0, $errno, $errfile, $errline);
+}
+set_error_handler("app_error_handler", (E_NOTICE | E_WARNING | E_ERROR));
+// --- End of Error Reporting ----------------------------------------
+
 // Route to get to the main page (login?)
 Route::get('/', function () {
     return view('welcome');
 });
 
-
 // UserController = controller that handles User Management
 // Routes for showing login page if not logged in, otherwise send to welcome main page
-Route::get('/loginpage', 'UserController@showLogin');
+Route::get('/login', 'UserController@showLogin');
 // POST processes the login from /loginpage
-Route::post('/loginpage', 'UserController@doLogin');
+Route::post('/login', 'UserController@doLogin');
 // Route for obtaining info of current user (by current session)
-Route::get('/userinfo', 'UserController@getUserInfo');
-Route::post('/userinfo', 'UserController@getUserInfo');
+Route::get('/apiuserinfo', 'UserController@getUserInfo');
+Route::post('/apiuserinfo', 'UserController@getUserInfo');
 // Route for trying to authenticate existent user by LDAP
-Route::get('/login', 'UserController@loginUser');
-Route::post('/login', 'UserController@loginUser');
+Route::get('/apilogin', 'UserController@loginUser');
+Route::post('/apilogin', 'UserController@loginUser');
 // Route for trying to logout existent user (on portal, no need for LDAP)
 Route::get('/logout', 'UserController@logoutUser');
 Route::post('/logout', 'UserController@logoutUser');

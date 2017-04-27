@@ -15,7 +15,11 @@
 </head>
 <body class="container">
 <div class="col-sm-8 col-sm-offset-2">
-
+    <legend>Session for user:</legend>
+    <strong class="displayname">Welcome {{ htmlentities($_SESSION['name']) }}</strong>
+    <div class="mail">{{ htmlentities($_SESSION['username']) }}</div>
+    <a href="{{ URL::to('logout') }}">Logout</a>
+    <br/>
     <!-- ALERTS -->
     <!-- loop over the alerts and show off some things -->
     @foreach ($itsqd_mon_messages as $alert)
@@ -24,8 +28,6 @@
         <h2>ID={{ $alert->message_id }} HOST={{ $alert->host }} SERVICE={{ $alert->service }} <small>OUTPUT={{ $alert->out_1 }}</small></h2>
 
     @endforeach-->
-
-
 </div>
 </body>
 </html>

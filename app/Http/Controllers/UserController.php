@@ -17,7 +17,8 @@ class UserController extends Controller {
      * Function Route for showing login page if not logged in, otherwise send to welcome main page
      * @param user Username for domain of LDAP
      */
-    public function showLogin() {
+    public function showLogin(Request $request) {
+        session_start();
         if (!isset($_SESSION['username'])) {
             return View::make('login');
         } else {
@@ -31,7 +32,8 @@ class UserController extends Controller {
      * @param user Username for domain of LDAP
      * @param user Password of that username for domain of LDAP
      */
-    public function doLogin() {
+    public function doLogin(Request $request) {
+        session_start();
         if (!isset($_SESSION['username'])) {
             // validate the info, create rules for the inputs
             $rules = array(
@@ -42,11 +44,11 @@ class UserController extends Controller {
             $validator = Validator::make(Input::all(), $rules);
             // if the validator fails, redirect back to the form
             if ($validator->fails()) {
-                return Redirect::to('loginpage')
+                return Redirect::to('login')
                     ->withErrors($validator) // send back all errors to the login form
                     ->withInput(Input::except('pass')); // send back the input (not the password) so that we can repopulate the form
             } else {
-                $response = Redirect::to('login')->withInput();
+                $response = loginUser($request);
 
                 // attempt to do the login
                 if ($response['status']=='200') {
@@ -72,6 +74,7 @@ class UserController extends Controller {
      * @param user Username for domain of LDAP
      */
     public function getUserInfo(Request $request) {
+        session_start();
         // verify if user is logged in from session variables
         if (!isset($_SESSION['username'])) {
             $data = [ 'status' => '401', 'msg' => 'Unauthorized' ];
@@ -96,6 +99,7 @@ class UserController extends Controller {
      */
     
     public function loginUser(Request $request) {
+        session_start();
         // LDAP server can also be 'DCPT02VPW.siege.red'
         $params = array("username" => 'redoute_france\itxxx', 'password' => 'xxx', 'server' => 'ldap.siege.red');
         if ($request->input('user') != null) {
@@ -181,6 +185,7 @@ class UserController extends Controller {
     }
     
     public function logoutUser(Request $request) {
+        session_start();
         // remove session variables that indicate user is logged
         unset($_SESSION['username']);
         unset($_SESSION['name']);
