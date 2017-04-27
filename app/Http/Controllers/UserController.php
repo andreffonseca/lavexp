@@ -18,9 +18,10 @@ class UserController extends Controller {
      * @param user Username for domain of LDAP
      */
     public function showLogin(Request $request) {
+        $err = false;
         session_start();
         if (!isset($_SESSION['username'])) {
-            return View::make('login');
+            return View::make('login')->with(['data'=>$err]);
         } else {
             // already logged in, send to home page
             return Redirect::to('/');
